@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "esp_log.h"
 
-static const char *TAG = "FreeRTOS";
+static const char *TAG = "main";
 
 void app_main(void)
 {
