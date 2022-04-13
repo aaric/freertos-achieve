@@ -7,8 +7,6 @@ static const char *TAG = "ch01_task_create";
 
 void myTask(void *pvParam)
 {
-    ESP_LOGI(TAG, "myTask");
-
     vTaskDelay(3000 / portTICK_PERIOD_MS);
 
     vTaskDelete(NULL);
@@ -21,6 +19,5 @@ void app_main(void)
     xTaskCreate(myTask, "myTask", 2048, NULL, 1, &pxMyTaskHandle);
 
     UBaseType_t uxPriority = uxTaskPriorityGet(pxMyTaskHandle);
-
     ESP_LOGI(TAG, "myTask uxPriority = %d", uxPriority);
 }

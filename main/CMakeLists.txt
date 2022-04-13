@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch01_task_create.c"
+    SRCS "ch02_task_params.c"
     INCLUDE_DIRS "."
 )
