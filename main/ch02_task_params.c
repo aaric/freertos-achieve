@@ -16,26 +16,26 @@ void myTask(void *pvParam)
     // int *piNum = (int *)pvParam;
     // ESP_LOGI(TAG, "myTask piNum = %d", *piNum);
 
-    char *pcText = (char *)pvParam;
-    ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+    // char *pcText = (char *)pvParam;
+    // ESP_LOGI(TAG, "myTask pcText = %s", pcText);
 
-    // ComplexNum_t *psNum = (ComplexNum_t *)pvParam;
-    // ESP_LOGI(TAG, "myTask a = %d, b = %d", psNum->a, psNum->b);
+    ComplexNum_t *psNum = (ComplexNum_t *)pvParam;
+    ESP_LOGI(TAG, "myTask psNum -> a = %d, b = %d", psNum->a, psNum->b);
 
     vTaskDelay(3000 / portTICK_PERIOD_MS);
 
     vTaskDelete(NULL);
 }
 
-int iNum = 100;
+// int iNum = 100;
 
-char *pcTxt = "hello world";
+// char *pcTxt = "hello world";
 
 ComplexNum_t sNum = {1, 2};
 
 void app_main(void)
 {
     // xTaskCreate(myTask, "myTask", 2048, (void *)&iNum, 1, NULL);
-    xTaskCreate(myTask, "myTask", 2048, (void *)pcTxt, 1, NULL);
-    // xTaskCreate(myTask, "myTask", 2048, (void *)&sNum, 1, NULL);
+    // xTaskCreate(myTask, "myTask", 2048, (void *)pcTxt, 1, NULL);
+    xTaskCreate(myTask, "myTask", 2048, (void *)&sNum, 1, NULL);
 }
