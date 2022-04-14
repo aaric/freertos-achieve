@@ -14,10 +14,10 @@ void myTask(void *pvParam)
 
 void app_main(void)
 {
-    TaskHandle_t pxMyTaskHandle = NULL;
+    TaskHandle_t pxMyTask = NULL;
     // xTaskCreate(myTask, "myTask", 2048, NULL, 1, NULL);
-    xTaskCreate(myTask, "myTask", 2048, NULL, 1, &pxMyTaskHandle);
+    xTaskCreate(myTask, "myTask", 2048, NULL, 1, &pxMyTask);
 
-    UBaseType_t uxPriority = uxTaskPriorityGet(pxMyTaskHandle);
+    UBaseType_t uxPriority = uxTaskPriorityGet(pxMyTask);
     ESP_LOGI(TAG, "myTask uxPriority = %d", uxPriority);
 }
