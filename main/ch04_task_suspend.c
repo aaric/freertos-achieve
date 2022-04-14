@@ -3,7 +3,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch03_task_priority";
+static const char *TAG = "ch04_task_suspend";
 
 void myTask(void *pvParam)
 {
@@ -14,6 +14,8 @@ void myTask(void *pvParam)
         ESP_LOGI(TAG, "myTask pcText = %s", pcText);
 
         vTaskDelay(3000 / portTICK_PERIOD_MS);
+
+        // vTaskSuspend(NULL);
     }
 
     vTaskDelete(NULL);
@@ -40,6 +42,14 @@ void app_main(void)
     // sleep 5s
     vTaskDelay(5000 / portTICK_PERIOD_MS);
 
-    // update uxPriority
-    vTaskPrioritySet(pxMyTask2, 3);
+    // supspend
+    // vTaskSuspendAll(); -- error
+    vTaskSuspend(pxMyTask1);
+
+    // sleep 15s
+    vTaskDelay(15000 / portTICK_PERIOD_MS);
+
+    // resume
+    // xTaskResumeAll(); -- error
+    vTaskResume(pxMyTask1);
 }

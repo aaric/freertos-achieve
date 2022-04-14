@@ -35,7 +35,7 @@ ComplexNum_t sNum = {1, 2};
 
 void app_main(void)
 {
-    // xTaskCreate(myTask, "myTask", 2048, (void *)&iNum, 1, NULL);
-    // xTaskCreate(myTask, "myTask", 2048, (void *)pcTxt, 1, NULL);
-    xTaskCreate(myTask, "myTask", 2048, (void *)&sNum, 1, NULL);
+    // xTaskCreate(myTask, "myTask", 2048, (void *)&iNum, NULL, NULL);
+    // xTaskCreate(myTask, "myTask", 2048, (void *)pcTxt, NULL, NULL);
+    xTaskCreate(myTask, "myTask", 2048, (void *)&sNum, NULL, NULL);
 }
