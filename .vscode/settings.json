@@ -10,7 +10,10 @@
     "idf.pythonBinPathWin": "D:/Espressif/python_env/idf4.4_py3.8_env/Scripts/python.exe",
     "idf.toolsPathWin": "D:\\Espressif",
     "files.associations": {
-        "*.inc": "c"
+        "*.inc": "c",
+        "task.h": "c",
+        "freertos.h": "c",
+        "esp_spi_flash.h": "c"
     },
     "idf.portWin": "COM5"
 }

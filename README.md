@@ -5,6 +5,14 @@
 [![CMake](https://img.shields.io/badge/CMake-3.5-success.svg?style=flat&logo=cmake)](https://cmake.org/cmake/help/v3.5)
 [![ESP-IDF](https://img.shields.io/badge/ESP_IDF-4.4-success.svg?style=flat&logo=espressif)](https://dl.espressif.com/dl/esp-idf/?idf=4.4)
 [![ESP32](https://img.shields.io/badge/ESP32-S3-success.svg?style=flat&logo=espHome)](https://docs.espressif.com/projects/esp-idf/zh_CN/v4.4/esp32s3/get-started/index.html)
-[![Release](https://img.shields.io/badge/Release-0.1.0-informational.svg)](https://github.com/aaric/freertos-achieve/releases)
+[![Release](https://img.shields.io/badge/Release-0.2.0-informational.svg)](https://github.com/aaric/freertos-achieve/releases)
 
-> [FreeRTOS Kernel Developer Docs](https://www.freertos.org/features.html)
+> [FreeRTOS Kernel Developer Docs](https://www.freertos.org/features.html)  
+> [FreeRTOS_Reference_Manual_V10.0.0.pdf](https://www.freertos.org/Documentation/FreeRTOS_Reference_Manual_V10.0.0.pdf)
+
+## [vTaskList](https://www.freertos.org/a00021.html#vTaskList)
+
+|No.|Key|Value|Remark|
+|:---:|:---:|:---:|-----|
+|1|`USE_TRACE_FACILITY`|`1`|*Enable FreeRTOS trace facility*|
+|2|`USE_STATS_FORMATTING_FUNCTIONS`|`1`|*Enable FreeRTOS to collect run time stats*|
