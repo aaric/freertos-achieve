@@ -33,7 +33,7 @@ void app_main(void)
     TaskHandle_t pxMyTask2 = NULL;
     xTaskCreate(myTask, "myTask2", 2048, (void *)pcMyTaskName2, NULL, &pxMyTask2);
 
-    // print uxPriority default 0
+    // uxPriority, default 0
     UBaseType_t uxPriority = uxTaskPriorityGet(pxMyTask1);
     ESP_LOGI(TAG, "myTask1 uxPriority = %d", uxPriority);
     uxPriority = uxTaskPriorityGet(pxMyTask2);

@@ -9,3 +9,10 @@
 
 > [FreeRTOS Kernel Developer Docs](https://www.freertos.org/features.html)  
 > [FreeRTOS_Reference_Manual_V10.0.0.pdf](https://www.freertos.org/Documentation/FreeRTOS_Reference_Manual_V10.0.0.pdf)
+
+## [vTaskList](https://www.freertos.org/a00021.html#vTaskList)
+
+|No.|Key|Value|Remark|
+|:---:|:---:|:---:|-----|
+|1|`USE_TRACE_FACILITY`|`1`|*Enable FreeRTOS trace facility*|
+|2|`USE_STATS_FORMATTING_FUNCTIONS`|`1`|*Enable FreeRTOS to collect run time stats*|
