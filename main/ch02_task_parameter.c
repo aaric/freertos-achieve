@@ -3,7 +3,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch02_task_parameter";
+static const char *TAG = "ch02_task_parameter.c";
 
 typedef struct ComplexNum
 {

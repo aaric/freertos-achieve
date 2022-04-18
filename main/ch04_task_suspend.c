@@ -3,7 +3,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch04_task_suspend";
+static const char *TAG = "ch04_task_suspend.c";
 
 void myTask(void *pvParam)
 {
