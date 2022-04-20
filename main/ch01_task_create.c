@@ -3,7 +3,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch01_task_create";
+static const char *TAG = "ch01_task_create.c";
 
 void myTask(void *pvParam)
 {

@@ -7,11 +7,11 @@ static const char *TAG = "ch05_task_list.c";
 
 void myTask(void *pvParam)
 {
+    char *pcText = (char *)pvParam;
 
     for (;;)
     {
-        char *pcText = (char *)pvParam;
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -37,6 +37,6 @@ void app_main(void)
         // esp_get_free_heap_size()
         ESP_LOGI(TAG, "\nTask          State  Priority  Stack   Num\n%s\n", pcWriteBuffer);
 
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
+        vTaskDelay(3000 / portTICK_PERIOD_MS);
     }
 }
