@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch06_task_stack.c"
+    SRCS "ch07_task_delay.c"
     INCLUDE_DIRS "."
 )

@@ -7,7 +7,6 @@ static const char *TAG = "ch03_task_priority.c";
 
 void myTask(void *pvParam)
 {
-
     for (;;)
     {
         char *pcText = (char *)pvParam;

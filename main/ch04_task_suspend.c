@@ -7,7 +7,6 @@ static const char *TAG = "ch04_task_suspend.c";
 
 void myTask(void *pvParam)
 {
-
     for (;;)
     {
         char *pcText = (char *)pvParam;

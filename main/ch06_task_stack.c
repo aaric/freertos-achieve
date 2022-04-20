@@ -3,11 +3,10 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch06_task_stack";
+static const char *TAG = "ch06_task_stack.c";
 
 void myTask(void *pvParam)
 {
-
     for (;;)
     {
         char *pcText = (char *)pvParam;
