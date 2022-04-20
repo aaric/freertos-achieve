@@ -11,7 +11,7 @@ void myTask(void *pvParam)
 
     for (;;)
     {
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }

@@ -11,7 +11,7 @@ void myTask(void *pvParam)
 
     for (;;)
     {
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -31,7 +31,7 @@ void app_main(void)
     while (1)
     {
         iStack = uxTaskGetStackHighWaterMark(pxMyTask);
-        ESP_LOGI(TAG, "iStack = %d", iStack);
+        ESP_LOGI(TAG, "appMain --> iStack = %d", iStack);
 
         vTaskDelay(3000 / portTICK_PERIOD_MS);
     }

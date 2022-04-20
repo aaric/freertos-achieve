@@ -11,7 +11,7 @@ void myTaskDelay(void *pvParam)
 
     for (;;)
     {
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -26,7 +26,7 @@ void myTaskDelayUnit(void *pvParam)
 
     for (;;)
     {
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelayUntil(&pxPreviousWakeTime, 1000 / portTICK_PERIOD_MS);
     }

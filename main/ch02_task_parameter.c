@@ -14,13 +14,13 @@ typedef struct ComplexNum
 void myTask(void *pvParam)
 {
     // int *piNum = (int *)pvParam;
-    // ESP_LOGI(TAG, "myTask piNum = %d", *piNum);
+    // ESP_LOGI(TAG, "myTask --> piNum = %d", *piNum);
 
     // char *pcText = (char *)pvParam;
-    // ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+    // ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
     ComplexNum_t *psNum = (ComplexNum_t *)pvParam;
-    ESP_LOGI(TAG, "myTask psNum -> a = %d, b = %d", psNum->a, psNum->b);
+    ESP_LOGI(TAG, "myTask --> psNum = { a = %d, b = %d }", psNum->a, psNum->b);
 
     vTaskDelay(3000 / portTICK_PERIOD_MS);
 

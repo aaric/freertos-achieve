@@ -11,7 +11,7 @@ void myTask(void *pvParam)
 
     for (;;)
     {
-        ESP_LOGI(TAG, "myTask pcText = %s", pcText);
+        ESP_LOGI(TAG, "myTask --> pcText = %s", pcText);
 
         vTaskDelay(3000 / portTICK_PERIOD_MS);
     }
@@ -33,9 +33,9 @@ void app_main(void)
 
     // uxPriority, default 0
     UBaseType_t uxPriority = uxTaskPriorityGet(pxMyTask1);
-    ESP_LOGI(TAG, "myTask1 uxPriority = %d", uxPriority);
+    ESP_LOGI(TAG, "myTask1 --> uxPriority = %d", uxPriority);
     uxPriority = uxTaskPriorityGet(pxMyTask2);
-    ESP_LOGI(TAG, "myTask2 uxPriority = %d", uxPriority);
+    ESP_LOGI(TAG, "myTask2 --> uxPriority = %d", uxPriority);
 
     // sleep 5s
     vTaskDelay(5000 / portTICK_PERIOD_MS);
