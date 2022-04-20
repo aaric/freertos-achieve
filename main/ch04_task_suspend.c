@@ -7,9 +7,10 @@ static const char *TAG = "ch04_task_suspend.c";
 
 void myTask(void *pvParam)
 {
+    char *pcText = (char *)pvParam;
+
     for (;;)
     {
-        char *pcText = (char *)pvParam;
         ESP_LOGI(TAG, "myTask pcText = %s", pcText);
 
         vTaskDelay(3000 / portTICK_PERIOD_MS);

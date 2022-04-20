@@ -7,9 +7,10 @@ static const char *TAG = "ch06_task_stack.c";
 
 void myTask(void *pvParam)
 {
+    char *pcText = (char *)pvParam;
+
     for (;;)
     {
-        char *pcText = (char *)pvParam;
         ESP_LOGI(TAG, "myTask pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -20,16 +21,16 @@ void myTask(void *pvParam)
 
 void app_main(void)
 {
-    // myTask1
-    TaskHandle_t pxMyTask1 = NULL;
-    char *pcMyTaskName1 = "myTask1 running";
-    xTaskCreate(myTask, "myTask1", 2048, (void *)pcMyTaskName1, 1, &pcMyTaskName1);
+    // myTask
+    TaskHandle_t pxMyTask = NULL;
+    char *pcMyTaskName = "myTask running";
+    xTaskCreate(myTask, "myTask", 2048, (void *)pcMyTaskName, 1, &pcMyTaskName);
 
     // uxTaskGetStackHighWaterMark
     UBaseType_t iStack;
     while (1)
     {
-        iStack = uxTaskGetStackHighWaterMark(pxMyTask1);
+        iStack = uxTaskGetStackHighWaterMark(pxMyTask);
         ESP_LOGI(TAG, "iStack = %d", iStack);
 
         vTaskDelay(3000 / portTICK_PERIOD_MS);

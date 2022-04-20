@@ -7,9 +7,10 @@ static const char *TAG = "ch05_task_list.c";
 
 void myTask(void *pvParam)
 {
+    char *pcText = (char *)pvParam;
+
     for (;;)
     {
-        char *pcText = (char *)pvParam;
         ESP_LOGI(TAG, "myTask pcText = %s", pcText);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
