@@ -15,18 +15,24 @@ typedef struct Letter
 void myTaskSend(void *pvParam)
 {
     // int iNum = 0;
-    Letter_t xLet = {0x23, '#'};
+    // Letter_t xLet = {0x23, '#'};
+    char *pcText;
+    int i = 0;
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
     for (;;)
     {
         // xStatus = xQueueSend(xQueue, &iNum, 0);
-        xStatus = xQueueSend(xQueue, &xLet, 0);
+        // xStatus = xQueueSend(xQueue, &xLet, 0);
+        pcText = (char *)malloc(50);
+        snprintf(pcText, 50, "This is my No.%d book.", i);
+        xStatus = xQueueSend(xQueue, &pcText, 0);
         if (pdPASS == xStatus)
         {
             // ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
-            ESP_LOGI(TAG, "myTaskSend send ok, xLet = { i = %d, ch = %c }", xLet.i, xLet.ch);
+            // ESP_LOGI(TAG, "myTaskSend send ok, xLet = { i = %d, ch = %c }", xLet.i, xLet.ch);
+            ESP_LOGI(TAG, "myTaskSend send ok, pcText = %s", pcText);
         }
         else
         {
@@ -34,8 +40,9 @@ void myTaskSend(void *pvParam)
         }
 
         // iNum++;
-        xLet.i++;
-        xLet.ch++;
+        // xLet.i++;
+        // xLet.ch++;
+        i++;
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -46,7 +53,8 @@ void myTaskSend(void *pvParam)
 void myTaskRec(void *pvParam)
 {
     // int iNum = 0;
-    Letter_t xLet;
+    // Letter_t xLet;
+    char *pcText;
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
@@ -55,12 +63,16 @@ void myTaskRec(void *pvParam)
         if (0 != uxQueueMessagesWaiting(xQueue))
         {
             // xStatus = xQueueReceive(xQueue, &iNum, 0);
-            xStatus = xQueueReceive(xQueue, &xLet, 0);
+            // xStatus = xQueueReceive(xQueue, &xLet, 0);
+            xStatus = xQueueReceive(xQueue, &pcText, 0);
 
             if (pdPASS == xStatus)
             {
                 // ESP_LOGI(TAG, "myTaskRec rec ok, iNum=%d", iNum);
-                ESP_LOGI(TAG, "myTaskRec rec ok, xLet = { i = %d, ch = %c }", xLet.i, xLet.ch);
+                // ESP_LOGI(TAG, "myTaskRec rec ok, xLet = { i = %d, ch = %c }", xLet.i, xLet.ch);
+                ESP_LOGI(TAG, "myTaskRec rec ok, pcText=%s", pcText);
+
+                free(pcText);
             }
             else
             {
@@ -81,8 +93,9 @@ void myTaskRec(void *pvParam)
 void app_main(void)
 {
     // xQueueCreate
-    // QueueHandle_t xQueueHandle = xQueueCreate(3, sizeof(int));
-    QueueHandle_t xQueueHandle = xQueueCreate(3, sizeof(Letter_t));
+    // QueueHandle_t xQueueHandle = xQueueCreate(5, sizeof(int));
+    // QueueHandle_t xQueueHandle = xQueueCreate(5, sizeof(Letter_t));
+    QueueHandle_t xQueueHandle = xQueueCreate(5, sizeof(char *));
     if (NULL != xQueueHandle)
     {
         // myTaskSend
