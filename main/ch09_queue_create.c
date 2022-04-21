@@ -14,23 +14,27 @@ typedef struct ComplexNum
 
 void myTaskSend(void *pvParam)
 {
-    int iNum = 0;
+    // int iNum = 0;
+    ComplexNum_t xNum = {0, 0};
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
     for (;;)
     {
-        xStatus = xQueueSend(xQueue, &iNum, 0);
+        // xStatus = xQueueSend(xQueue, &iNum, 0);
+        xStatus = xQueueSend(xQueue, &xNum, 0);
         if (pdPASS == xStatus)
         {
-            ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
+            // ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
+            ESP_LOGI(TAG, "myTaskSend send ok, xNum = { a = %d, b = %d }", xNum.a, xNum.b);
         }
         else
         {
             ESP_LOGI(TAG, "myTaskSend send error");
         }
 
-        iNum++;
+        // iNum++;
+        xNum.a++;
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -40,7 +44,8 @@ void myTaskSend(void *pvParam)
 
 void myTaskRec(void *pvParam)
 {
-    int iNum = 0;
+    // int iNum = 0;
+    ComplexNum_t xNum;
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
@@ -48,11 +53,13 @@ void myTaskRec(void *pvParam)
     {
         if (0 != uxQueueMessagesWaiting(xQueue))
         {
-            xStatus = xQueueReceive(xQueue, &iNum, 0);
+            // xStatus = xQueueReceive(xQueue, &iNum, 0);
+            xStatus = xQueueReceive(xQueue, &xNum, 0);
 
             if (pdPASS == xStatus)
             {
-                ESP_LOGI(TAG, "myTaskRec rec ok, iNum=%d", iNum);
+                // ESP_LOGI(TAG, "myTaskRec rec ok, iNum=%d", iNum);
+                ESP_LOGI(TAG, "myTaskRec rec ok, xNum = { a = %d, b = %d }", xNum.a, xNum.b);
             }
             else
             {
@@ -73,7 +80,8 @@ void myTaskRec(void *pvParam)
 void app_main(void)
 {
     // xQueueCreate
-    QueueHandle_t xQueueHandle = xQueueCreate(3, sizeof(int));
+    // QueueHandle_t xQueueHandle = xQueueCreate(3, sizeof(int));
+    QueueHandle_t xQueueHandle = xQueueCreate(3, sizeof(ComplexNum_t));
     if (NULL != xQueueHandle)
     {
         // myTaskSend

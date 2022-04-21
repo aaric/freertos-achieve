@@ -13,7 +13,8 @@
         "*.inc": "c",
         "task.h": "c",
         "freertos.h": "c",
-        "esp_spi_flash.h": "c"
+        "esp_spi_flash.h": "c",
+        "random": "c"
     },
     "idf.portWin": "COM5"
 }
