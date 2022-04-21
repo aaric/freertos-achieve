@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch08_task_wdt.c"
+    SRCS "ch09_queue_create.c"
     INCLUDE_DIRS "."
 )
