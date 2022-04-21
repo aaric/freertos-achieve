@@ -6,25 +6,31 @@
 
 static const char *TAG = "ch09_queue_create.c";
 
+typedef struct ComplexNum
+{
+    int a;
+    int b;
+} ComplexNum_t;
+
 void myTaskSend(void *pvParam)
 {
-    int i = 0;
+    int iNum = 0;
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
     for (;;)
     {
-        xStatus = xQueueSend(xQueue, &i, 0);
+        xStatus = xQueueSend(xQueue, &iNum, 0);
         if (pdPASS == xStatus)
         {
-            ESP_LOGI(TAG, "myTaskSend send ok, i = %d", i);
+            ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
         }
         else
         {
             ESP_LOGI(TAG, "myTaskSend send error");
         }
 
-        i++;
+        iNum++;
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -34,7 +40,7 @@ void myTaskSend(void *pvParam)
 
 void myTaskRec(void *pvParam)
 {
-    int j = 0;
+    int iNum = 0;
     BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
@@ -42,11 +48,11 @@ void myTaskRec(void *pvParam)
     {
         if (0 != uxQueueMessagesWaiting(xQueue))
         {
-            xStatus = xQueueReceive(xQueue, &j, 0);
+            xStatus = xQueueReceive(xQueue, &iNum, 0);
 
             if (pdPASS == xStatus)
             {
-                ESP_LOGI(TAG, "myTaskRec rec ok, j=%d", j);
+                ESP_LOGI(TAG, "myTaskRec rec ok, iNum=%d", iNum);
             }
             else
             {
