@@ -17,11 +17,11 @@ void myTaskSend1(void *pvParam)
         xStatus = xQueueSend(xQueue, &iNum, 0);
         if (pdPASS == xStatus)
         {
-            ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
+            ESP_LOGI(TAG, "myTaskSend1 send ok, iNum = %d", iNum);
         }
         else
         {
-            ESP_LOGI(TAG, "myTaskSend send error");
+            ESP_LOGI(TAG, "myTaskSend1 send error");
         }
 
         iNum++;
@@ -43,11 +43,11 @@ void myTaskSend2(void *pvParam)
         xStatus = xQueueSend(xQueue, &iNum, 0);
         if (pdPASS == xStatus)
         {
-            ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
+            ESP_LOGI(TAG, "myTaskSend2 send ok, iNum = %d", iNum);
         }
         else
         {
-            ESP_LOGI(TAG, "myTaskSend send error");
+            ESP_LOGI(TAG, "myTaskSend2 send error");
         }
 
         iNum++;
