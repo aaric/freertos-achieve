@@ -15,7 +15,6 @@ void myTaskSend(void *pvParam)
     for (;;)
     {
         xStatus = xQueueSend(xQueue, &iNum, 0);
-        xStatus = xQueueSend(xQueue, &pcText, 0);
         if (pdPASS == xStatus)
         {
             ESP_LOGI(TAG, "myTaskSend send ok, iNum = %d", iNum);
@@ -36,6 +35,7 @@ void myTaskSend(void *pvParam)
 void myTaskRec(void *pvParam)
 {
     int iNum = 0;
+    BaseType_t xStatus;
     QueueHandle_t xQueue = (QueueHandle_t)pvParam;
 
     for (;;)
@@ -47,8 +47,6 @@ void myTaskRec(void *pvParam)
             if (pdPASS == xStatus)
             {
                 ESP_LOGI(TAG, "myTaskRec rec ok, iNum=%d", iNum);
-
-                free(pcText);
             }
             else
             {
