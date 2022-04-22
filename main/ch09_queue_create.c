@@ -60,11 +60,11 @@ void myTaskRec(void *pvParam)
 
     for (;;)
     {
-        if (0 != uxQueueMessagesWaiting(xQueue))
-        {
+        // if (0 != uxQueueMessagesWaiting(xQueue))
+        // {
             // xStatus = xQueueReceive(xQueue, &iNum, 0);
             // xStatus = xQueueReceive(xQueue, &xLet, 0);
-            xStatus = xQueueReceive(xQueue, &pcText, 0);
+            xStatus = xQueueReceive(xQueue, &pcText, portMAX_DELAY);
 
             if (pdPASS == xStatus)
             {
@@ -78,13 +78,13 @@ void myTaskRec(void *pvParam)
             {
                 ESP_LOGI(TAG, "myTaskRec rec error");
             }
-        }
-        else
-        {
-            ESP_LOGI(TAG, "myTaskRec rec none");
-        }
+        // }
+        // else
+        // {
+        //     ESP_LOGI(TAG, "myTaskRec rec none");
+        // }
 
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        // vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 
     vTaskDelete(NULL);
