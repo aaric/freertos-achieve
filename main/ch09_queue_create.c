@@ -105,6 +105,7 @@ void app_main(void)
         xTaskCreate(myTaskRec, "myTaskRec", 1024 * 5, (void *)xQueueHandle, 1, NULL);
 
         // vTaskStartScheduler
+        // https://docs.espressif.com/projects/esp-idf/zh_CN/v4.4/esp32s3/api-guides/freertos-smp.html#smp-scheduler
         // vTaskStartScheduler(); -- error
     }
 
