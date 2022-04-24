@@ -8,17 +8,23 @@ static const char *TAG = "ch12_timer_create.c";
 
 void myTimer(TimerHandle_t xTimer)
 {
-    ESP_LOGI(TAG, "myTimer, only once");
+    ESP_LOGI(TAG, "myTimer, many timers");
 }
 
 void app_main(void)
 {
     // xTimerCreate
-    TimerHandle_t xMyTimer = xTimerCreate("myTimer", pdMS_TO_TICKS(1000), pdFALSE, (void *)0, myTimer);
+    TimerHandle_t xMyTimer = xTimerCreate("myTimer", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, myTimer);
+
+    // xTimerStart
     xTimerStart(xMyTimer, 0);
+
+    // xTimerStop
+    vTaskDelay(pdMS_TO_TICKS(5000));
+    xTimerStop(xMyTimer, 0);
 
     while (1)
     {
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
