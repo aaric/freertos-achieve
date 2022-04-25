@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch12_timer_create.c"
+    SRCS "ch13_semaphore_binary.c"
     INCLUDE_DIRS "."
 )
