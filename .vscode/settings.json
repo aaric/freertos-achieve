@@ -14,7 +14,8 @@
         "task.h": "c",
         "freertos.h": "c",
         "esp_spi_flash.h": "c",
-        "random": "c"
+        "random": "c",
+        "queue.h": "c"
     },
     "idf.portWin": "COM5"
 }

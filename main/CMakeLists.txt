@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch11_queue_mailbox.c"
+    SRCS "ch12_timer_create.c"
     INCLUDE_DIRS "."
 )
