@@ -8,8 +8,21 @@ static const char *TAG = "ch12_timer_create.c";
 
 void myTimer(TimerHandle_t xTimer)
 {
+    static int iMsTicks = 1000;
     BaseType_t iTimeId = (BaseType_t)pvTimerGetTimerID(xTimer);
     const char *pcTimeName = pcTimerGetName(xTimer);
+
+    if (0 == iTimeId)
+    {
+        // xTimerChangePeriod
+        iMsTicks += 1000;
+        xTimerChangePeriod(xTimer, pdMS_TO_TICKS(iMsTicks), 0);
+
+        if (5000 == iMsTicks)
+        {
+            iMsTicks = 0;
+        }
+    }
 
     ESP_LOGI(TAG, "myTimer --> timerId = %d, timerName = %s", iTimeId, pcTimeName);
 }
@@ -17,8 +30,8 @@ void myTimer(TimerHandle_t xTimer)
 void app_main(void)
 {
     // xTimerCreate
-    TimerHandle_t xMyTimer1 = xTimerCreate("myTimer1", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, myTimer);
-    TimerHandle_t xMyTimer2 = xTimerCreate("myTimer2", pdMS_TO_TICKS(2000), pdTRUE, (void *)2, myTimer);
+    TimerHandle_t xMyTimer1 = xTimerCreate("myTimer1", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, myTimer);
+    TimerHandle_t xMyTimer2 = xTimerCreate("myTimer2", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, myTimer);
 
     // xTimerStart
     xTimerStart(xMyTimer1, 0);
@@ -30,9 +43,9 @@ void app_main(void)
 
     while (1)
     {
-        //xTimerReset
-        xTimerReset(xMyTimer2, 0);
+        // xTimerReset
+        // xTimerReset(xMyTimer2, 0);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
