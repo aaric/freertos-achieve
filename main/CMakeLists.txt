@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch16_semaphore_recursive_mutex.c"
+    SRCS "ch17_event_group_wait.c"
     INCLUDE_DIRS "."
 )
