@@ -1,19 +1,60 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/event_groups.h"
 #include "esp_log.h"
+
+#define BIT_0 (1 << 0)
+#define BIT_4 (1 << 4)
 
 static const char *TAG = "ch17_event_group_wait.c";
 
-void myTask(void *pvParam)
+void myTask1(void *pvParam)
 {
-    ESP_LOGI(TAG, "myTask begin");
+    EventBits_t uxBits;
+    EventGroupHandle_t *pxEventGroupWait = (EventGroupHandle_t *)pvParam;
+    if (NULL != pxEventGroupWait)
+    {
+        ESP_LOGI(TAG, "myTask1 begin, pxEventGroupWait is not null");
+    }
 
     for (;;)
     {
-        ESP_LOGI(TAG, "hello world");
+        // xEventGroupWaitBits
+        uxBits = xEventGroupWaitBits(*pxEventGroupWait,
+                                     BIT_0 | BIT_4,
+                                     pdTRUE,
+                                     pdFALSE,
+                                     portMAX_DELAY);
 
-        vTaskDelay(pdMS_TO_TICKS(3000));
+        ESP_LOGI(TAG, "myTask1, bit0 or bit4 is setted --> uxBits = 0x%x", uxBits);
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+
+    vTaskDelete(NULL);
+}
+
+void myTask2(void *pvParam)
+{
+    EventBits_t uxBits;
+    EventGroupHandle_t *pxEventGroupWait = (EventGroupHandle_t *)pvParam;
+    if (NULL != pxEventGroupWait)
+    {
+        ESP_LOGI(TAG, "myTask2 begin, pxEventGroupWait is not null");
+    }
+
+    for (;;)
+    {
+        uxBits = xEventGroupSetBits(*pxEventGroupWait, BIT_0);
+        ESP_LOGI(TAG, "myTask2, bit0 is setted --> uxBits=0x%x", uxBits);
+
+        vTaskDelay(pdMS_TO_TICKS(5000));
+
+        uxBits = xEventGroupSetBits(*pxEventGroupWait, BIT_4);
+        ESP_LOGI(TAG, "myTask2, bit4 is setted --> uxBits=0x%x", uxBits);
+
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 
     vTaskDelete(NULL);
@@ -21,14 +62,25 @@ void myTask(void *pvParam)
 
 void app_main(void)
 {
-    // vTaskSuspendAll
-    vTaskSuspendAll();
+    // xEventGroupCreate
+    EventGroupHandle_t xEventGroupHandle = xEventGroupCreate();
 
-    // xTaskCreate
-    xTaskCreate(myTask, "myTask", 1024 * 5, NULL, 1, NULL);
+    if (NULL != xEventGroupHandle)
+    {
+        // vTaskSuspendAll
+        vTaskSuspendAll();
 
-    // xTaskResumeAll
-    xTaskResumeAll();
+        // xTaskCreate
+        xTaskCreate(myTask1, "myTask1", 1024 * 5, (void *)&xEventGroupHandle, 2, NULL);
+        xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)&xEventGroupHandle, 1, NULL);
+
+        // xTaskResumeAll
+        xTaskResumeAll();
+    }
+    else
+    {
+        ESP_LOGI(TAG, "xEventGroupHandle create error");
+    }
 
     while (1)
     {
