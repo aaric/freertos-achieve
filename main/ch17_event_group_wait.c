@@ -21,13 +21,19 @@ void myTask1(void *pvParam)
     for (;;)
     {
         // xEventGroupWaitBits
+        // uxBits = xEventGroupWaitBits(*pxEventGroupWait,
+        //                              BIT_0 | BIT_4,
+        //                              pdTRUE,
+        //                              pdFALSE,
+        //                              portMAX_DELAY);
         uxBits = xEventGroupWaitBits(*pxEventGroupWait,
                                      BIT_0 | BIT_4,
                                      pdTRUE,
-                                     pdFALSE,
+                                     pdTRUE,
                                      portMAX_DELAY);
 
-        ESP_LOGI(TAG, "myTask1, bit0 or bit4 is setted --> uxBits = 0x%x", uxBits);
+        // ESP_LOGI(TAG, "myTask1, bit0 or bit4 is setted --> uxBits = 0x%x", uxBits);
+        ESP_LOGI(TAG, "myTask1, bit0 and bit4 is setted --> uxBits = 0x%x", uxBits);
 
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
