@@ -20,6 +20,8 @@ void myTask1(void *pvParam)
 
     for (;;)
     {
+        ESP_LOGI(TAG, "myTask1 start");
+
         // xEventGroupWaitBits
         // uxBits = xEventGroupWaitBits(*pxEventGroupWait,
         //                              BIT_0 | BIT_4,
@@ -52,11 +54,15 @@ void myTask2(void *pvParam)
 
     for (;;)
     {
+        ESP_LOGI(TAG, "myTask2 start");
+
+        // xEventGroupSetBits
         uxBits = xEventGroupSetBits(*pxEventGroupWait, BIT_0);
         ESP_LOGI(TAG, "myTask2, bit0 is setted --> uxBits=0x%x", uxBits);
 
         vTaskDelay(pdMS_TO_TICKS(5000));
 
+        // xEventGroupSetBits
         uxBits = xEventGroupSetBits(*pxEventGroupWait, BIT_4);
         ESP_LOGI(TAG, "myTask2, bit4 is setted --> uxBits=0x%x", uxBits);
 
