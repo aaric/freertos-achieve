@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch18_event_group_sync.c"
+    SRCS "ch19_notify_sync.c"
     INCLUDE_DIRS "."
 )
