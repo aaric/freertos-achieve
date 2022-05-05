@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/stream_buffer.h"
 #include "esp_log.h"
 
-static const char *TAG = "ch19_notify_sync.c";
+static const char *TAG = "ch21_stream_buffer.c";
 
 void myTask1(void *pvParam)
 {
@@ -12,12 +14,9 @@ void myTask1(void *pvParam)
     for (;;)
     {
         ESP_LOGI(TAG, "myTask1 start");
-        ESP_LOGI(TAG, "myTask1 wait notify");
 
-        // ulTaskNotifyTake
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-
-        ESP_LOGI(TAG, "myTask1 notify take");
+        // sleep 5s
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 
     vTaskDelete(NULL);
@@ -37,11 +36,6 @@ void myTask2(void *pvParam)
 
         // sleep 5s
         vTaskDelay(pdMS_TO_TICKS(5000));
-
-        // xTaskNotifyGive
-        xTaskNotifyGive(pxMyTask1);
-
-        ESP_LOGI(TAG, "myTask2 notify give");
     }
 
     vTaskDelete(NULL);
