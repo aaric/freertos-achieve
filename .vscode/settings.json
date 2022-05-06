@@ -18,5 +18,5 @@
         "queue.h": "c",
         "semphr.h": "c"
     },
-    "idf.portWin": "COM5"
+    "idf.portWin": "COM6"
 }

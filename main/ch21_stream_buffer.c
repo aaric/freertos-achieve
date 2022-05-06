@@ -9,14 +9,29 @@ static const char *TAG = "ch21_stream_buffer.c";
 
 void myTask1(void *pvParam)
 {
-    ESP_LOGI(TAG, "myTask1 begin");
+    int i = 0;
+    char pvTxData[50];
+    size_t xTxDataLen = 0;
+    size_t xSendDataLen = 0;
+    StreamBufferHandle_t xStreamBuffer = (StreamBufferHandle_t)pvParam;
+    if (NULL != xStreamBuffer)
+    {
+        ESP_LOGI(TAG, "myTask1 begin, xStreamBuffer is not null");
+    }
 
     for (;;)
     {
         ESP_LOGI(TAG, "myTask1 start");
 
-        // sleep 5s
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        // xStreamBufferSend
+        i++;
+        xTxDataLen = sprintf(pvTxData, "No.%d, Hello freeRTOS!", i);
+        xSendDataLen = xStreamBufferSend(xStreamBuffer, (void *)pvTxData, xTxDataLen, portMAX_DELAY);
+
+        ESP_LOGI(TAG, "myTask1 --> pvTxData = %s, xTxDataLen = %d, xSendDataLen = %d", pvTxData, xTxDataLen, xSendDataLen);
+
+        // sleep 3s
+        vTaskDelay(pdMS_TO_TICKS(3000));
     }
 
     vTaskDelete(NULL);
@@ -24,18 +39,22 @@ void myTask1(void *pvParam)
 
 void myTask2(void *pvParam)
 {
-    TaskHandle_t pxMyTask1 = (TaskHandle_t)pvParam;
-    if (NULL != pxMyTask1)
+    char pvRxData[50];
+    size_t xSendDataLen = 0;
+    StreamBufferHandle_t xStreamBuffer = (StreamBufferHandle_t)pvParam;
+    if (NULL != xStreamBuffer)
     {
-        ESP_LOGI(TAG, "myTask2 begin, pxMyTask1 is not null");
+        ESP_LOGI(TAG, "myTask2 begin, xStreamBuffer is not null");
     }
 
     for (;;)
     {
         ESP_LOGI(TAG, "myTask2 start");
 
-        // sleep 5s
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        // xStreamBufferReceive
+        xSendDataLen = xStreamBufferReceive(xStreamBuffer, (void *)pvRxData, sizeof(pvRxData), portMAX_DELAY);
+
+        ESP_LOGI(TAG, "myTask2 --> pvRxData = %s, xSendDataLen = %d", pvRxData, xSendDataLen);
     }
 
     vTaskDelete(NULL);
@@ -44,17 +63,20 @@ void myTask2(void *pvParam)
 void app_main(void)
 {
     // Init
-    TaskHandle_t pxMyTask1;
+    StreamBufferHandle_t xStreamBufferHandle = xStreamBufferCreate(1000, 10);
 
-    // vTaskSuspendAll
-    vTaskSuspendAll();
+    if (NULL != xStreamBufferHandle)
+    {
+        // vTaskSuspendAll
+        vTaskSuspendAll();
 
-    // xTaskCreate
-    xTaskCreate(myTask1, "myTask1", 1024 * 5, NULL, 1, &pxMyTask1);
-    xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)pxMyTask1, 1, NULL);
+        // xTaskCreate
+        xTaskCreate(myTask1, "myTask1", 1024 * 5, (void *)xStreamBufferHandle, 1, NULL);
+        xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)xStreamBufferHandle, 1, NULL);
 
-    // xTaskResumeAll
-    xTaskResumeAll();
+        // xTaskResumeAll
+        xTaskResumeAll();
+    }
 
     while (1)
     {
