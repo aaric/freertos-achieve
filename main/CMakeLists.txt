@@ -1,4 +1,4 @@
 idf_component_register(
-    SRCS "ch21_stream_buffer.c"
+    SRCS "ch22_message_buffer.c"
     INCLUDE_DIRS "."
 )
