@@ -72,7 +72,7 @@ void myTask2(void *pvParam)
 
 void app_main(void)
 {
-    // xEventGroupCreate
+    // Init
     TaskHandle_t pxMyTask1;
 
     // vTaskSuspendAll
