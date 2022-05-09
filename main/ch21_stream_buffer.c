@@ -60,6 +60,36 @@ void myTask2(void *pvParam)
     vTaskDelete(NULL);
 }
 
+void myTask3(void *pvParam)
+{
+    size_t xCurrSpace = 0;
+    size_t xMinSpace = 1000;
+    StreamBufferHandle_t xStreamBuffer = (StreamBufferHandle_t)pvParam;
+    if (NULL != xStreamBuffer)
+    {
+        ESP_LOGI(TAG, "myTask3 begin, xStreamBuffer is not null");
+    }
+
+    for (;;)
+    {
+        ESP_LOGI(TAG, "myTask3 start");
+
+        // xStreamBufferSpacesAvailable
+        xCurrSpace = xStreamBufferSpacesAvailable(xStreamBuffer);
+        if (xCurrSpace < xMinSpace)
+        {
+            xMinSpace = xCurrSpace;
+        }
+
+        ESP_LOGI(TAG, "myTask3 --> xCurrSpace = %d, xMinSpace = %d", xCurrSpace, xMinSpace);
+
+        // sleep 3s
+        vTaskDelay(pdMS_TO_TICKS(3000));
+    }
+
+    vTaskDelete(NULL);
+}
+
 void app_main(void)
 {
     // Init
@@ -73,6 +103,7 @@ void app_main(void)
         // xTaskCreate
         xTaskCreate(myTask1, "myTask1", 1024 * 5, (void *)xStreamBufferHandle, 1, NULL);
         xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)xStreamBufferHandle, 1, NULL);
+        xTaskCreate(myTask3, "myTask3", 1024 * 5, (void *)xStreamBufferHandle, 1, NULL);
 
         // xTaskResumeAll
         xTaskResumeAll();
