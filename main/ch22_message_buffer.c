@@ -28,6 +28,9 @@ void myTask1(void *pvParam)
         xSendDataLen = xMessageBufferSend(xMessageBuffer, (void *)pvTxData, xTxDataLen, portMAX_DELAY);
 
         ESP_LOGI(TAG, "myTask1 --> pvTxData = %s, xTxDataLen = %d, xSendDataLen = %d", pvTxData, xTxDataLen, xSendDataLen);
+
+        // sleep 3s
+        vTaskDelay(pdMS_TO_TICKS(3000));
     }
 
     vTaskDelete(NULL);
@@ -43,8 +46,8 @@ void myTask2(void *pvParam)
         ESP_LOGI(TAG, "myTask2 begin, xMessageBuffer is not null");
     }
 
-    // sleep 3s
-    vTaskDelay(pdMS_TO_TICKS(3000));
+    // sleep 9s
+    vTaskDelay(pdMS_TO_TICKS(9000));
 
     for (;;)
     {
@@ -56,8 +59,8 @@ void myTask2(void *pvParam)
 
         ESP_LOGI(TAG, "myTask2 --> pvRxData = %s, xRecDataLen = %d", pvRxData, xRecDataLen);
 
-        // sleep 1s
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        // sleep 3s
+        vTaskDelay(pdMS_TO_TICKS(3000));
     }
 
     vTaskDelete(NULL);
@@ -96,14 +99,14 @@ void myTask3(void *pvParam)
 void app_main(void)
 {
     // Init
-    MessageBufferHandle_t xMessageBufferHandle = xMessageBufferCreate(1000);
+    MessageBufferHandle_t xMessageBufferHandle = xMessageBufferCreate(100);
 
     if (NULL != xMessageBufferHandle)
     {
         // xTaskCreate
         xTaskCreate(myTask1, "myTask1", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
         xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
-        // xTaskCreate(myTask3, "myTask3", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
+        xTaskCreate(myTask3, "myTask3", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
     }
     else
     {
