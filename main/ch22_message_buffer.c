@@ -24,14 +24,10 @@ void myTask1(void *pvParam)
         ESP_LOGI(TAG, "myTask1 start");
 
         // xMessageBufferSend
-        i++;
-        xTxDataLen = sprintf(pvTxData, "No.%d, Hello freeRTOS!", i);
+        xTxDataLen = sprintf(pvTxData, "No.%d, Hello freeRTOS!", ++i);
         xSendDataLen = xMessageBufferSend(xMessageBuffer, (void *)pvTxData, xTxDataLen, portMAX_DELAY);
 
         ESP_LOGI(TAG, "myTask1 --> pvTxData = %s, xTxDataLen = %d, xSendDataLen = %d", pvTxData, xTxDataLen, xSendDataLen);
-
-        // sleep 1s
-        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 
     vTaskDelete(NULL);
@@ -39,7 +35,7 @@ void myTask1(void *pvParam)
 
 void myTask2(void *pvParam)
 {
-    char pvRxData[10];
+    char pvRxData[200];
     size_t xRecDataLen = 0;
     MessageBufferHandle_t xMessageBuffer = (MessageBufferHandle_t)pvParam;
     if (NULL != xMessageBuffer)
@@ -47,18 +43,21 @@ void myTask2(void *pvParam)
         ESP_LOGI(TAG, "myTask2 begin, xMessageBuffer is not null");
     }
 
+    // sleep 3s
+    vTaskDelay(pdMS_TO_TICKS(3000));
+
     for (;;)
     {
         ESP_LOGI(TAG, "myTask2 start");
-
-        // sleep 3s
-        vTaskDelay(pdMS_TO_TICKS(3000));
 
         // xMessageBufferReceive
         memset(pvRxData, 0, sizeof(pvRxData));
         xRecDataLen = xMessageBufferReceive(xMessageBuffer, (void *)pvRxData, sizeof(pvRxData), portMAX_DELAY);
 
         ESP_LOGI(TAG, "myTask2 --> pvRxData = %s, xRecDataLen = %d", pvRxData, xRecDataLen);
+
+        // sleep 1s
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 
     vTaskDelete(NULL);
@@ -101,16 +100,14 @@ void app_main(void)
 
     if (NULL != xMessageBufferHandle)
     {
-        // vTaskSuspendAll
-        vTaskSuspendAll();
-
         // xTaskCreate
         xTaskCreate(myTask1, "myTask1", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
         xTaskCreate(myTask2, "myTask2", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
-        xTaskCreate(myTask3, "myTask3", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
-
-        // xTaskResumeAll
-        xTaskResumeAll();
+        // xTaskCreate(myTask3, "myTask3", 1024 * 5, (void *)xMessageBufferHandle, 1, NULL);
+    }
+    else
+    {
+        ESP_LOGI(TAG, "xMessageBufferHandle create error");
     }
 
     while (1)
