@@ -99,7 +99,7 @@ void myTask3(void *pvParam)
 void app_main(void)
 {
     // Init
-    MessageBufferHandle_t xMessageBufferHandle = xMessageBufferCreate(100);
+    MessageBufferHandle_t xMessageBufferHandle = xMessageBufferCreate(1000);
 
     if (NULL != xMessageBufferHandle)
     {
