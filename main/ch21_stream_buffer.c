@@ -40,7 +40,7 @@ void myTask1(void *pvParam)
 void myTask2(void *pvParam)
 {
     char pvRxData[50];
-    size_t xSendDataLen = 0;
+    size_t xRecDataLen = 0;
     StreamBufferHandle_t xStreamBuffer = (StreamBufferHandle_t)pvParam;
     if (NULL != xStreamBuffer)
     {
@@ -52,9 +52,9 @@ void myTask2(void *pvParam)
         ESP_LOGI(TAG, "myTask2 start");
 
         // xStreamBufferReceive
-        xSendDataLen = xStreamBufferReceive(xStreamBuffer, (void *)pvRxData, sizeof(pvRxData), portMAX_DELAY);
+        xRecDataLen = xStreamBufferReceive(xStreamBuffer, (void *)pvRxData, sizeof(pvRxData), portMAX_DELAY);
 
-        ESP_LOGI(TAG, "myTask2 --> pvRxData = %s, xSendDataLen = %d", pvRxData, xSendDataLen);
+        ESP_LOGI(TAG, "myTask2 --> pvRxData = %s, xRecDataLen = %d", pvRxData, xRecDataLen);
     }
 
     vTaskDelete(NULL);
